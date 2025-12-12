@@ -12,7 +12,6 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 from functools import wraps
 
-# --- CONFIGURATION ---
 load_dotenv()
 app = Flask(__name__)
 # Secret key is required for session management (Doctor Login) and flash messages
@@ -26,11 +25,11 @@ if not api_key:
 
 genai.configure(api_key=api_key)
 
-# --- FILE PATHS (CSV Persistence) ---
+
 USERS_CSV = 'users.csv'
 CASES_CSV = 'cases.csv'
 
-# --- HELPER FUNCTIONS FOR CSV ---
+#
 
 def init_csv_db():
     """Initialize CSV files with headers and demo data if they don't exist."""
@@ -130,7 +129,7 @@ def get_case_by_id(case_id):
 # Initialize CSVs on startup
 init_csv_db()
 
-# --- AI PROMPT (Strict JSON) ---
+# PROMPT
 SYSTEM_PROMPT = """
 ACT AS: Senior Clinical Consultant & Medical Scribe.
 TASK: Analyze patient intake data and generate a structured clinical case file.
@@ -165,7 +164,7 @@ OUTPUT FORMAT: Return ONLY valid JSON. Do not include markdown formatting like `
 }}
 """
 
-# --- DECORATORS ---
+# DECORATORS
 
 def login_required(f):
     @wraps(f)
@@ -218,7 +217,7 @@ def log_interaction(case_id, inputs, latency):
     except Exception as e:
         logging.error(f"Logging Error: {e}")
 
-# --- ROUTES ---
+#ROUTES
 
 @app.route('/')
 def landing():
@@ -230,7 +229,7 @@ def landing():
             return redirect(url_for('doctor_dashboard'))
     return render_template('landing.html')
 
-# --- PATIENT ROUTES ---
+#PATIENT ROUTES 
 
 @app.route('/patient/login', methods=['GET', 'POST'])
 def patient_login():
@@ -243,7 +242,7 @@ def patient_login():
         if user and user['role'] == 'patient' and check_password_hash(user['password_hash'], password):
             session['user_id'] = user['id']
             session['role'] = 'patient'
-            # We store the account name here, but we will OVERRIDE it with form data in submit
+          
             session['account_name'] = user['full_name'] 
             return redirect(url_for('patient_intake'))
         else:
@@ -255,7 +254,7 @@ def patient_login():
 @patient_required
 def patient_intake():
     doctors = get_all_doctors()
-    # Format for template
+   
     doctor_list = [{"id": d['id'], "name": d['full_name'], "specialty": d['specialty']} for d in doctors]
     return render_template('intake.html', doctors=doctor_list)
 
@@ -276,8 +275,7 @@ def patient_submit():
         doctor_id = str(doctor_id_str)
         doctor = get_user_by_id(doctor_id)
         
-        # Capture the name directly from the form form ("Patient Name")
-        # This fixes the "John Doe" issue
+  
         patient_name_input = request.form.get('name')
         if not patient_name_input:
              patient_name_input = session.get('account_name', 'Unknown')
@@ -285,9 +283,9 @@ def patient_submit():
         raw_data = {
             "id": case_id,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
-            "patient_name": patient_name_input, # Use the form input name!
+            "patient_name": patient_name_input, 
             "doctor_name": doctor['full_name'] if doctor else "Unknown",
-            "name": patient_name_input, # Redundant but keeps schema consistent
+            "name": patient_name_input, 
             "age": request.form.get('age'),
             "gender": request.form.get('gender'),
             "weight": request.form.get('weight'),
@@ -304,14 +302,14 @@ def patient_submit():
             "language": selected_language
         }
 
-        # AI Processing
+ 
         model = genai.GenerativeModel("gemini-2.5-flash", generation_config={"response_mime_type": "application/json"})
         formatted_prompt = SYSTEM_PROMPT.format(language=selected_language)
         prompt = f"{formatted_prompt}\nPATIENT DATA: {json.dumps(raw_data, default=str)}"
         
         response = model.generate_content(prompt)
         
-        # Robust JSON cleaning
+ 
         try:
             ai_text = response.text.strip()
             if ai_text.startswith("```"):
@@ -322,7 +320,6 @@ def patient_submit():
             flash("AI Service temporarily unavailable. Please try again.", "danger")
             return redirect(url_for('patient_intake'))
 
-        # Save to CSV
         case_record = {
             'id': case_id,
             'patient_id': session['user_id'],
@@ -351,7 +348,7 @@ def patient_result(case_id):
         flash("Case not found.", "danger")
         return redirect(url_for('patient_intake'))
     
-    # Simple security check (optional for prototype)
+
     if case['patient_id'] != str(session['user_id']):
          flash("Access Denied", "danger")
          return redirect(url_for('patient_intake'))
@@ -364,7 +361,7 @@ def patient_logout():
     flash("You have been logged out.", "success")
     return redirect(url_for('landing'))
 
-# --- DOCTOR ROUTES ---
+
 
 @app.route('/doctor/login', methods=['GET', 'POST'])
 def doctor_login():
@@ -390,7 +387,7 @@ def doctor_dashboard():
     doctor_id = session.get('user_id')
     cases_list = get_cases_for_doctor(doctor_id)
     
-    # Sort by newest first (reverse timestamp)
+
     cases_list.sort(key=lambda x: x['timestamp'], reverse=True)
     
     doctor_info = get_user_by_id(doctor_id)
