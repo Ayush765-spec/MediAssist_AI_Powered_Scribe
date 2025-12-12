@@ -24,67 +24,30 @@
             max-width: 420px;
             width: 100%;
         }
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .login-header h2 {
-            color: #0052cc;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .login-header p {
-            color: #6b7280;
-            font-size: 0.95rem;
-        }
-        .form-label {
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-        .form-control {
-            border: 1.5px solid #d1d5db;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            font-size: 0.95rem;
-        }
-        .form-control:focus {
-            border-color: #0052cc;
-            box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.1);
-        }
+        .login-header { text-align: center; margin-bottom: 2rem; }
+        .login-header h2 { color: #0052cc; font-weight: 700; margin-bottom: 0.5rem; }
+        .login-header p { color: #6b7280; font-size: 0.95rem; }
+        .form-label { font-weight: 600; color: #1f2937; margin-bottom: 0.5rem; }
+        .form-control { border: 1.5px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.95rem; }
+        .form-control:focus { border-color: #0052cc; box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.1); }
         .btn-login {
             background: linear-gradient(135deg, #0052cc 0%, #003d99 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 0.75rem;
-            font-weight: 600;
-            margin-top: 1.5rem;
-            transition: all 0.2s ease;
-            width: 100%;
+            color: white; border: none; border-radius: 50px; padding: 0.75rem;
+            font-weight: 600; margin-top: 1.5rem; transition: all 0.2s ease; width: 100%;
         }
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(0, 82, 204, 0.3);
-        }
-        .demo-creds {
-            background: #fef3c7;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
-            color: #92400e;
-        }
-        .back-link {
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0, 82, 204, 0.3); }
+        .back-link { text-align: center; margin-top: 1.5rem; }
+        .back-link a { color: #0052cc; text-decoration: none; font-weight: 500; }
+        
+        /* NEW: Register Link Style */
+        .register-link {
             text-align: center;
             margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.9rem;
         }
-        .back-link a {
-            color: #0052cc;
-            text-decoration: none;
-            font-weight: 500;
-        }
+        .register-link a { color: #0052cc; font-weight: 700; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -128,6 +91,11 @@
             <strong><i class="fas fa-lightbulb me-1"></i>Demo Credentials:</strong><br>
             Username: <code>patient1</code><br>
             Password: <code>p123</code>
+        </div>
+
+        <!-- New Register Section -->
+        <div class="register-link">
+            New to MediAssist? <a href="/register/patient">Create Account</a>
         </div>
 
         <div class="back-link">

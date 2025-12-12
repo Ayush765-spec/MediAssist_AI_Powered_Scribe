@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Account | MediAssist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Define theme classes based on the role */
+        .bg-patient { background: linear-gradient(135deg, #e3f2fd 0%, #f0f4f8 100%); }
+        .bg-doctor { background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); }
+        .text-patient { color: #0052cc; }
+        .text-doctor { color: #7b1fa2; }
+        .btn-patient { background: linear-gradient(135deg, #0052cc 0%, #003d99 100%); color: white; border: none; }
+        .btn-doctor { background: linear-gradient(135deg, #7b1fa2 0%, #5e35b1 100%); color: white; border: none; }
+        .btn-theme:hover { transform: translateY(-2px); color: white; }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            padding: 2rem 0;
+        }
+        .login-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border: 1px solid #e5e7eb;
+            padding: 2.5rem;
+            max-width: 450px;
+            width: 100%;
+        }
+        .form-control { border-radius: 8px; padding: 0.7rem 1rem; }
+    </style>
+</head>
+<body class="{% if role == 'patient' %}bg-patient{% else %}bg-doctor{% endif %}">
+    <div class="login-card">
+        <div class="text-center mb-4">
+            <h2 class="{% if role == 'patient' %}text-patient{% else %}text-doctor{% endif %} fw-bold">
+                <i class="fas {% if role == 'patient' %}fa-user-plus{% else %}fa-user-md{% endif %} me-2"></i>
+                New {{ role|capitalize }} Account
+            </h2>
+            <p class="text-muted">Join the MediAssist Platform</p>
+        </div>
+
+        {% with messages = get_flashed_messages(category_filter=['danger']) %}
+            {% if messages %}
+                <div class="alert alert-danger small py-2">{{ messages[0] }}</div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label fw-bold small text-muted">Full Name</label>
+                <input type="text" name="name" class="form-control" placeholder="e.g. John Doe" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold small text-muted">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Choose a login ID" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold small text-muted">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Create a password" required>
+            </div>
+
+            <!-- Doctor Specific Fields -->
+            {% if role == 'doctor' %}
+            <div class="p-3 bg-light rounded border mb-3">
+                <h6 class="text-doctor border-bottom pb-2 mb-3 small fw-bold">Physician Verification</h6>
+                <div class="mb-3">
+                    <label class="form-label small">Medical License ID</label>
+                    <input type="text" name="doctor_id" class="form-control form-control-sm" placeholder="e.g. DOC-55123" required>
+                    <div class="form-text small">Must start with 'DOC-'</div>
+                </div>
+                <div class="mb-0">
+                    <label class="form-label small">Specialty</label>
+                    <input type="text" name="specialty" class="form-control form-control-sm" placeholder="e.g. Cardiology" required>
+                </div>
+            </div>
+            {% endif %}
+
+            <button type="submit" class="btn {% if role == 'patient' %}btn-patient{% else %}btn-doctor{% endif %} btn-theme mt-3">
+                Create Account
+            </button>
+        </form>
+
+        <div class="text-center mt-4 border-top pt-3">
+            <small class="text-muted">Already have an account?</small><br>
+            <a href="/{{ role }}/login" class="{% if role == 'patient' %}text-patient{% else %}text-doctor{% endif %} fw-bold text-decoration-none">Login Here</a>
+        </div>
+    </div>
+</body>
+</html>

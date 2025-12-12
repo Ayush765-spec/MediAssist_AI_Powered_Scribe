@@ -3,3 +3,5 @@ google-generativeai
 markdown
 gunicorn
 python-dotenv
+flask_sqlalchemy
+werkzeug

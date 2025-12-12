@@ -24,67 +24,30 @@
             max-width: 420px;
             width: 100%;
         }
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .login-header h2 {
-            color: #7b1fa2;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .login-header p {
-            color: #6b7280;
-            font-size: 0.95rem;
-        }
-        .form-label {
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-        .form-control {
-            border: 1.5px solid #d1d5db;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            font-size: 0.95rem;
-        }
-        .form-control:focus {
-            border-color: #7b1fa2;
-            box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.1);
-        }
+        .login-header { text-align: center; margin-bottom: 2rem; }
+        .login-header h2 { color: #7b1fa2; font-weight: 700; margin-bottom: 0.5rem; }
+        .login-header p { color: #6b7280; font-size: 0.95rem; }
+        .form-label { font-weight: 600; color: #1f2937; margin-bottom: 0.5rem; }
+        .form-control { border: 1.5px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.95rem; }
+        .form-control:focus { border-color: #7b1fa2; box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.1); }
         .btn-login {
             background: linear-gradient(135deg, #7b1fa2 0%, #5e35b1 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 0.75rem;
-            font-weight: 600;
-            margin-top: 1.5rem;
-            transition: all 0.2s ease;
-            width: 100%;
+            color: white; border: none; border-radius: 50px; padding: 0.75rem;
+            font-weight: 600; margin-top: 1.5rem; transition: all 0.2s ease; width: 100%;
         }
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(123, 31, 162, 0.3);
-        }
-        .demo-creds {
-            background: #fef3c7;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
-            color: #92400e;
-        }
-        .back-link {
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(123, 31, 162, 0.3); }
+        .back-link { text-align: center; margin-top: 1.5rem; }
+        .back-link a { color: #7b1fa2; text-decoration: none; font-weight: 500; }
+
+        /* NEW: Register Link Style */
+        .register-link {
             text-align: center;
             margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.9rem;
         }
-        .back-link a {
-            color: #7b1fa2;
-            text-decoration: none;
-            font-weight: 500;
-        }
+        .register-link a { color: #7b1fa2; font-weight: 700; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -94,44 +57,34 @@
             <p>Access your clinical dashboard and patient cases</p>
         </div>
 
+        {% if request.args.get('message') %}
+        <div class="alert alert-success small text-center">{{ request.args.get('message') }}</div>
+        {% endif %}
+
         {% with messages = get_flashed_messages(category_filter=['danger']) %}
-            {% if messages %}
-                <div class="alert alert-danger" role="alert">
-                    {{ messages[0] }}
-                </div>
-            {% endif %}
+            {% if messages %}<div class="alert alert-danger small text-center">{{ messages[0] }}</div>{% endif %}
         {% endwith %}
 
         <form method="POST" action="/doctor/login">
             <div class="mb-3">
-                <label for="username" class="form-label">Doctor ID</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="dr_patel" required>
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="Doctor ID" required>
             </div>
-
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="••••••••" required>
             </div>
-
-            <button type="submit" class="btn btn-login">
-                <i class="fas fa-sign-in-alt me-2"></i>Login
-            </button>
+            <button type="submit" class="btn btn-login"><i class="fas fa-sign-in-alt me-2"></i>Login</button>
         </form>
 
-        <div class="demo-creds">
-            <strong><i class="fas fa-lightbulb me-1"></i>Demo Credentials:</strong><br>
-            <small>
-                Dr. Smith: <code>dr_smith</code> / <code>smith123</code><br>
-                Dr. Patel: <code>dr_patel</code> / <code>patel123</code><br>
-                Dr. Lee: <code>dr_lee</code> / <code>lee123</code>
-            </small>
+        <!-- New Register Section -->
+        <div class="register-link">
+            New Provider? <a href="/register/doctor">Register Practice</a>
         </div>
 
         <div class="back-link">
             <a href="/"><i class="fas fa-arrow-left me-1"></i>Back to Home</a>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
