@@ -4,15 +4,15 @@
 
 :root {
   /* Color Palette - Medical Blues */
-  --color-primary: #0052cc;              /* Royal Blue */
-  --color-primary-light: #e3f2fd;        /* Light Sky Blue */
-  --color-primary-dark: #003d99;         /* Dark Blue */
-  --color-secondary: #0088cc;            /* Secondary Blue */
-  --color-success: #10b981;              /* Success Green */
-  --color-warning: #f59e0b;              /* Warning Amber */
-  --color-danger: #dc2626;               /* Alert Red */
-  --color-info: #06b6d4;                 /* Cyan Info */
-  
+  --color-primary: #0052cc; /* Royal Blue */
+  --color-primary-light: #e3f2fd; /* Light Sky Blue */
+  --color-primary-dark: #003d99; /* Dark Blue */
+  --color-secondary: #0088cc; /* Secondary Blue */
+  --color-success: #10b981; /* Success Green */
+  --color-warning: #f59e0b; /* Warning Amber */
+  --color-danger: #dc2626; /* Alert Red */
+  --color-info: #06b6d4; /* Cyan Info */
+
   /* Neutral Palette */
   --color-white: #ffffff;
   --color-gray-50: #f9fafb;
@@ -27,16 +27,17 @@
   --color-gray-900: #111827;
 
   /* Typography */
-  --font-family-base: 'Inter', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-size-xs: 0.75rem;               /* 12px */
-  --font-size-sm: 0.875rem;              /* 14px */
-  --font-size-base: 1rem;                /* 16px */
-  --font-size-lg: 1.125rem;              /* 18px */
-  --font-size-xl: 1.25rem;               /* 20px */
-  --font-size-2xl: 1.5rem;               /* 24px */
-  --font-size-3xl: 1.875rem;             /* 30px */
-  --font-size-4xl: 2.25rem;              /* 36px */
-  
+  --font-family-base: "Inter", "Segoe UI", "Roboto", -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+
   --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -54,17 +55,20 @@
   --spacing-3xl: 4rem;
 
   /* Border Radius */
-  --radius-sm: 0.375rem;                 /* 6px */
-  --radius-md: 0.5rem;                   /* 8px */
-  --radius-lg: 1rem;                     /* 16px */
-  --radius-xl: 1.5rem;                   /* 24px */
-  --radius-full: 9999px;                 /* Pill shape */
+  --radius-sm: 0.375rem; /* 6px */
+  --radius-md: 0.5rem; /* 8px */
+  --radius-lg: 1rem; /* 16px */
+  --radius-xl: 1.5rem; /* 24px */
+  --radius-full: 9999px; /* Pill shape */
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
@@ -101,19 +105,36 @@ body {
    TYPOGRAPHY
    ======================================== */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
   color: var(--color-gray-900);
   margin-bottom: var(--spacing-md);
 }
 
-h1 { font-size: var(--font-size-4xl); }
-h2 { font-size: var(--font-size-3xl); }
-h3 { font-size: var(--font-size-2xl); }
-h4 { font-size: var(--font-size-xl); }
-h5 { font-size: var(--font-size-lg); }
-h6 { font-size: var(--font-size-base); }
+h1 {
+  font-size: var(--font-size-4xl);
+}
+h2 {
+  font-size: var(--font-size-3xl);
+}
+h3 {
+  font-size: var(--font-size-2xl);
+}
+h4 {
+  font-size: var(--font-size-xl);
+}
+h5 {
+  font-size: var(--font-size-lg);
+}
+h6 {
+  font-size: var(--font-size-base);
+}
 
 p {
   margin-bottom: var(--spacing-md);
@@ -131,7 +152,8 @@ a:hover {
   text-decoration: underline;
 }
 
-small, .small-muted {
+small,
+.small-muted {
   font-size: var(--font-size-sm);
   color: var(--color-gray-500);
 }
@@ -191,7 +213,11 @@ small, .small-muted {
    ======================================== */
 
 .hero-section {
-  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-white) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-light) 0%,
+    var(--color-white) 100%
+  );
   padding: var(--spacing-3xl) var(--spacing-xl);
   text-align: center;
   margin-bottom: var(--spacing-2xl);
@@ -235,6 +261,8 @@ small, .small-muted {
   font-size: var(--font-size-sm);
   text-transform: capitalize;
   display: block;
+  line-height: 1.5;
+  min-height: 21px;
 }
 
 .form-label .req {
@@ -252,7 +280,9 @@ small, .small-muted {
   color: var(--color-gray-800);
   background-color: var(--color-white);
   transition: all var(--transition-base);
-  min-height: 44px;                      /* Touch-friendly */
+  min-height: 44px; /* Touch-friendly */
+  width: 100%;
+  display: block;
 }
 
 .form-control::placeholder {
@@ -292,12 +322,43 @@ textarea.form-control {
   border-bottom: 2px solid var(--color-gray-100);
 }
 
+/* Column Alignment - Ensure all form fields align properly */
+.row.g-3 {
+  align-items: flex-end;
+}
+
+.row.g-3 > [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.row.g-3 > [class*="col-"] > .form-label {
+  flex-shrink: 0;
+  margin-bottom: var(--spacing-sm);
+}
+
+.row.g-3 > [class*="col-"] > .form-control,
+.row.g-3 > [class*="col-"] > .form-select {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+/* Reset alignment for section headers */
+.row.g-3 > .col-12 {
+  align-self: stretch;
+}
+
 /* ========================================
    BUTTONS
    ======================================== */
 
 .btn-medical {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 100%
+  );
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-full);
@@ -307,7 +368,7 @@ textarea.form-control {
   cursor: pointer;
   transition: all var(--transition-base);
   box-shadow: var(--shadow-md);
-  min-height: 48px;                      /* Touch-friendly */
+  min-height: 48px; /* Touch-friendly */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -317,7 +378,11 @@ textarea.form-control {
 .btn-medical:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
-  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-dark) 0%,
+    var(--color-primary) 100%
+  );
 }
 
 .btn-medical:active {
@@ -573,7 +638,11 @@ textarea.form-control {
    ======================================== */
 
 .patient-summary-card {
-  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-white) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-light) 0%,
+    var(--color-white) 100%
+  );
   border: 1px solid var(--color-primary);
   border-radius: var(--radius-lg);
   padding: var(--spacing-2xl);
@@ -604,12 +673,14 @@ textarea.form-control {
   margin-bottom: var(--spacing-sm);
 }
 
-.care-list, .red-flags-list {
+.care-list,
+.red-flags-list {
   list-style: none;
   padding-left: 0;
 }
 
-.care-list li, .red-flags-list li {
+.care-list li,
+.red-flags-list li {
   padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-2xl);
   position: relative;
   color: var(--color-gray-700);
@@ -653,57 +724,136 @@ textarea.form-control {
   white-space: nowrap;
 }
 
-.shadow-sm { box-shadow: var(--shadow-sm); }
-.shadow-md { box-shadow: var(--shadow-md); }
-.shadow-lg { box-shadow: var(--shadow-lg); }
-.shadow-xl { box-shadow: var(--shadow-xl); }
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+.shadow-xl {
+  box-shadow: var(--shadow-xl);
+}
 
-.rounded { border-radius: var(--radius-md); }
-.rounded-lg { border-radius: var(--radius-lg); }
-.rounded-xl { border-radius: var(--radius-xl); }
-.rounded-full { border-radius: var(--radius-full); }
+.rounded {
+  border-radius: var(--radius-md);
+}
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+.rounded-xl {
+  border-radius: var(--radius-xl);
+}
+.rounded-full {
+  border-radius: var(--radius-full);
+}
 
-.fw-light { font-weight: var(--font-weight-light); }
-.fw-normal { font-weight: var(--font-weight-normal); }
-.fw-medium { font-weight: var(--font-weight-medium); }
-.fw-semibold { font-weight: var(--font-weight-semibold); }
-.fw-bold { font-weight: var(--font-weight-bold); }
+.fw-light {
+  font-weight: var(--font-weight-light);
+}
+.fw-normal {
+  font-weight: var(--font-weight-normal);
+}
+.fw-medium {
+  font-weight: var(--font-weight-medium);
+}
+.fw-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+.fw-bold {
+  font-weight: var(--font-weight-bold);
+}
 
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
 
-.mb-0 { margin-bottom: 0; }
-.mb-1 { margin-bottom: var(--spacing-sm); }
-.mb-2 { margin-bottom: var(--spacing-md); }
-.mb-3 { margin-bottom: var(--spacing-lg); }
-.mb-4 { margin-bottom: var(--spacing-xl); }
-.mb-5 { margin-bottom: var(--spacing-2xl); }
+.mb-0 {
+  margin-bottom: 0;
+}
+.mb-1 {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-2 {
+  margin-bottom: var(--spacing-md);
+}
+.mb-3 {
+  margin-bottom: var(--spacing-lg);
+}
+.mb-4 {
+  margin-bottom: var(--spacing-xl);
+}
+.mb-5 {
+  margin-bottom: var(--spacing-2xl);
+}
 
-.mt-2 { margin-top: var(--spacing-md); }
-.mt-3 { margin-top: var(--spacing-lg); }
-.mt-4 { margin-top: var(--spacing-xl); }
-.mt-5 { margin-top: var(--spacing-2xl); }
+.mt-2 {
+  margin-top: var(--spacing-md);
+}
+.mt-3 {
+  margin-top: var(--spacing-lg);
+}
+.mt-4 {
+  margin-top: var(--spacing-xl);
+}
+.mt-5 {
+  margin-top: var(--spacing-2xl);
+}
 
-.p-3 { padding: var(--spacing-lg); }
-.p-4 { padding: var(--spacing-xl); }
-.p-5 { padding: var(--spacing-2xl); }
+.p-3 {
+  padding: var(--spacing-lg);
+}
+.p-4 {
+  padding: var(--spacing-xl);
+}
+.p-5 {
+  padding: var(--spacing-2xl);
+}
 
-.px-4 { padding-left: var(--spacing-xl); padding-right: var(--spacing-xl); }
-.py-5 { padding-top: var(--spacing-2xl); padding-bottom: var(--spacing-2xl); }
+.px-4 {
+  padding-left: var(--spacing-xl);
+  padding-right: var(--spacing-xl);
+}
+.py-5 {
+  padding-top: var(--spacing-2xl);
+  padding-bottom: var(--spacing-2xl);
+}
 
-.gap-3 { gap: var(--spacing-lg); }
-.gap-4 { gap: var(--spacing-xl); }
+.gap-3 {
+  gap: var(--spacing-lg);
+}
+.gap-4 {
+  gap: var(--spacing-xl);
+}
 
 /* ========================================
    PRINT STYLES (For Print-to-EMR)
    ======================================== */
 
 @media print {
-  .navbar, .btn, a { display: none; }
-  body { background: white; }
-  .paper-card { box-shadow: none; border: 1px solid #ccc; }
-  .soap-section { page-break-inside: avoid; }
+  .navbar,
+  .btn,
+  a {
+    display: none;
+  }
+  body {
+    background: white;
+  }
+  .paper-card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+  .soap-section {
+    page-break-inside: avoid;
+  }
 }
 
 /* ========================================
@@ -720,9 +870,15 @@ textarea.form-control {
     padding: var(--spacing-2xl) var(--spacing-lg);
   }
 
-  h1 { font-size: var(--font-size-3xl); }
-  h2 { font-size: var(--font-size-2xl); }
-  h3 { font-size: var(--font-size-xl); }
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+  h3 {
+    font-size: var(--font-size-xl);
+  }
 
   .form-label {
     font-size: var(--font-size-sm);
@@ -766,9 +922,15 @@ textarea.form-control {
     border-radius: var(--radius-lg);
   }
 
-  h1 { font-size: var(--font-size-2xl); }
-  h2 { font-size: var(--font-size-xl); }
-  h3 { font-size: var(--font-size-lg); }
+  h1 {
+    font-size: var(--font-size-2xl);
+  }
+  h2 {
+    font-size: var(--font-size-xl);
+  }
+  h3 {
+    font-size: var(--font-size-lg);
+  }
 
   .navbar-brand {
     font-size: var(--font-size-lg);
