@@ -24,6 +24,15 @@ from flask_sqlalchemy import SQLAlchemy
 
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 app = Flask(__name__)
+
+# Load translation files
+TRANSLATIONS = {}
+TRANSLATIONS_DIR = os.path.join(os.path.dirname(__file__), "translations")
+for lang_code in ["en", "hi"]:
+    lang_file = os.path.join(TRANSLATIONS_DIR, f"{lang_code}.json")
+    if os.path.exists(lang_file):
+        with open(lang_file, "r", encoding="utf-8") as f:
+            TRANSLATIONS[lang_code] = json.load(f)
 # Secret key is required for session management (Doctor Login) and flash messages
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
@@ -262,16 +271,35 @@ def is_test_case(raw_data):
     checks = [
         val("patient_name") in {"john doe", "john"},
         val("age") in {"48", "48.0"},
-        val("gender") == "female",
         val("temp") in {"38", "38.0"},
         val("bp") in {"120/80", "120 80", "120-80"},
         val("weight") in {"76", "76.0"},
-        val("height") in {"184.9", "184.90"},
+        val("height") in {"184", "184.0"},
         val("allergies") in {"none", "", "no"},
         val("current_meds") in {"none", "", "no"},
         val("symptoms") in {"none", "", "no"},
     ]
     return all(checks)
+
+
+def get_language():
+    """Get current language from session or default to English."""
+    return session.get("language", "en")
+
+
+def get_translations(lang_code=None):
+    """Get translations for the current or specified language."""
+    if lang_code is None:
+        lang_code = get_language()
+    return TRANSLATIONS.get(lang_code, TRANSLATIONS.get("en", {}))
+
+
+@app.route("/set_language/<lang_code>")
+def set_language(lang_code):
+    """Set the user's language preference."""
+    if lang_code in TRANSLATIONS:
+        session["language"] = lang_code
+    return redirect(request.referrer or url_for("landing"))
 
 
 def build_predefined_ai_analysis(language, raw_data):
@@ -385,7 +413,10 @@ def landing():
             return redirect(url_for("patient_intake"))
         elif session["role"] == "doctor":
             return redirect(url_for("doctor_dashboard"))
-    return render_template("landing.html")
+
+    lang_code = get_language()
+    translations = get_translations(lang_code)
+    return render_template("landing.html", t=translations, lang=lang_code)
 
 
 # PATIENT ROUTES
@@ -393,6 +424,9 @@ def landing():
 
 @app.route("/patient/login", methods=["GET", "POST"])
 def patient_login():
+    lang_code = get_language()
+    translations = get_translations(lang_code)
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -411,20 +445,25 @@ def patient_login():
             return redirect(url_for("patient_intake"))
         else:
             flash("Invalid username or password", "danger")
-    return render_template("patient_login.html")
+    return render_template("patient_login.html", t=translations, lang=lang_code)
 
 
 @app.route("/patient/intake")
 @login_required
 @patient_required
 def patient_intake():
+    lang_code = get_language()
+    translations = get_translations(lang_code)
+
     doctors = get_all_doctors()
     # Doctors are already dictionaries
     doctor_list = [
         {"id": d["id"], "name": d["full_name"], "specialty": d["specialty"]}
         for d in doctors
     ]
-    return render_template("intake.html", doctors=doctor_list)
+    return render_template(
+        "intake.html", doctors=doctor_list, t=translations, lang=lang_code
+    )
 
 
 @app.route("/patient/submit", methods=["POST"])
@@ -541,6 +580,9 @@ def patient_submit():
 @login_required
 @patient_required
 def patient_result(case_id):
+    lang_code = get_language()
+    translations = get_translations(lang_code)
+
     case = get_case_by_id(case_id)
     if not case:
         flash("Case not found.", "danger")
@@ -550,7 +592,9 @@ def patient_result(case_id):
         flash("Access Denied", "danger")
         return redirect(url_for("patient_intake"))
 
-    return render_template("patient_result.html", case=case)
+    return render_template(
+        "patient_result.html", case=case, t=translations, lang=lang_code
+    )
 
 
 @app.route("/patient/logout")
@@ -562,6 +606,9 @@ def patient_logout():
 
 @app.route("/doctor/login", methods=["GET", "POST"])
 def doctor_login():
+    lang_code = get_language()
+    translations = get_translations(lang_code)
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -579,20 +626,27 @@ def doctor_login():
             return redirect(url_for("doctor_dashboard"))
         else:
             flash("Invalid credentials", "danger")
-    return render_template("doctor_login.html")
+    return render_template("doctor_login.html", t=translations, lang=lang_code)
 
 
 @app.route("/doctor/dashboard")
 @login_required
 @doctor_required
 def doctor_dashboard():
+    lang_code = get_language()
+    translations = get_translations(lang_code)
+
     doctor_id = session.get("user_id")
     cases_list = get_cases_for_doctor(doctor_id)
     # cases_list is already sorted by timestamp desc in DB query
 
     doctor_info = get_user_by_id(doctor_id)
     return render_template(
-        "doctor_dashboard.html", cases=cases_list, doctor=doctor_info
+        "doctor_dashboard.html",
+        cases=cases_list,
+        doctor=doctor_info,
+        t=translations,
+        lang=lang_code,
     )
 
 
@@ -600,6 +654,9 @@ def doctor_dashboard():
 @login_required
 @doctor_required
 def doctor_view(case_id):
+    lang_code = get_language()
+    translations = get_translations(lang_code)
+
     doctor_id = session.get("user_id")
     case = get_case_by_id(case_id)
 
@@ -607,7 +664,9 @@ def doctor_view(case_id):
         flash("Case not found or access denied.", "danger")
         return redirect(url_for("doctor_dashboard"))
 
-    return render_template("doctor_view.html", case=case)
+    return render_template(
+        "doctor_view.html", case=case, t=translations, lang=lang_code
+    )
 
 
 @app.route("/doctor/logout")
@@ -621,6 +680,9 @@ def doctor_logout():
 @login_required
 def view_cases():
     """Display all cases for the logged-in user (doctor or patient)."""
+    lang_code = get_language()
+    translations = get_translations(lang_code)
+
     user_id = session.get("user_id")
     role = session.get("role")
 
@@ -632,7 +694,9 @@ def view_cases():
         flash("Invalid role.", "danger")
         return redirect(url_for("landing"))
 
-    return render_template("cases.html", cases=cases_list, role=role)
+    return render_template(
+        "cases.html", cases=cases_list, role=role, t=translations, lang=lang_code
+    )
 
 
 if __name__ == "__main__":

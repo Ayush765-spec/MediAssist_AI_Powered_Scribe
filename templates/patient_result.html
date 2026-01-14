@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Your Health Summary | MediAssist</title>
+    <title>{{ t.patient_result.title }} | {{ t.common.app_name }}</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -24,15 +24,17 @@
         <a class="navbar-brand" href="/">
           <i class="fas fa-heartbeat"></i>
           <span
-            >MediAssist <small class="text-muted">Patient Summary</small></span
+            >{{ t.common.app_name }}
+            <small class="text-muted">{{ t.patient_result.title }}</small></span
           >
         </a>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 align-items-center">
+          {% include '_language_toggle.html' %}
           <a href="/cases" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-folder-open me-1"></i>All Records
+            <i class="fas fa-folder-open me-1"></i>{{ t.common.all_records }}
           </a>
           <a href="/patient/logout" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-home me-1"></i> Home
+            <i class="fas fa-home me-1"></i> {{ t.common.home }}
           </a>
         </div>
       </div>
@@ -42,12 +44,11 @@
       <!-- Case ID Banner -->
       <div class="alert alert-info text-center border-info shadow-sm">
         <h4 class="fw-bold">
-          <i class="fas fa-id-card me-2"></i> Case ID:
+          <i class="fas fa-id-card me-2"></i> {{ t.patient_result.case_id }}:
           <span class="text-primary">{{ case.raw_data.id }}</span>
         </h4>
         <p class="mb-0">
-          Please show this ID to your doctor at reception to access your
-          detailed clinical notes.
+          {{ t.patient_result.timestamp }}: {{ case.raw_data.timestamp }}
         </p>
       </div>
 
@@ -57,8 +58,8 @@
           <div class="card shadow-sm border-0 mb-4 bg-primary-light">
             <div class="card-header bg-primary text-white">
               <h5 class="mb-0">
-                <i class="fas fa-stethoscope me-2"></i>Your Most Probable
-                Diagnosis
+                <i class="fas fa-stethoscope me-2"></i>{{
+                t.patient_result.primary_diagnosis }}
               </h5>
             </div>
             <div class="card-body">
@@ -75,11 +76,12 @@
           <div class="card shadow-sm border-0 mb-4">
             <div class="card-header bg-primary text-white p-3">
               <h5 class="mb-0">
-                <i class="fas fa-book-medical me-2"></i> What This Means For You
+                <i class="fas fa-book-medical me-2"></i> {{
+                t.patient_result.patient_view }}
               </h5>
             </div>
             <div class="card-body p-4">
-              <h6 class="text-primary mb-3">Understanding Your Condition:</h6>
+              <h6 class="text-primary mb-3">{{ t.patient_result.summary }}:</h6>
               <p style="line-height: 1.6">
                 {{ case.ai_analysis.patient_view.summary | safe }}
               </p>
@@ -87,7 +89,7 @@
               <div class="bg-light p-3 rounded mb-4 border-left border-info">
                 <h6 class="text-info mb-2">
                   <i class="fas fa-microscope me-2"></i>
-                  <strong>How Your Body Is Responding:</strong>
+                  <strong>{{ t.patient_result.pathophysiology }}:</strong>
                 </h6>
                 <p class="mb-0" style="line-height: 1.6">
                   {{ case.ai_analysis.patient_view.pathophysiology | safe }}
@@ -100,7 +102,7 @@
                     <div class="card-body">
                       <h6 class="text-success mb-2">
                         <i class="fas fa-check-circle me-2"></i>
-                        <strong>What You Can Do:</strong>
+                        <strong>{{ t.patient_result.care_plan }}:</strong>
                       </h6>
                       <ul class="list-unstyled small">
                         {% for step in case.ai_analysis.patient_view.care_plan
@@ -119,7 +121,7 @@
                     <div class="card-body">
                       <h6 class="text-danger mb-2">
                         <i class="fas fa-exclamation-triangle me-2"></i>
-                        <strong>Seek Help If:</strong>
+                        <strong>{{ t.patient_result.red_flags }}:</strong>
                       </h6>
                       <ul class="list-unstyled small">
                         {% for flag in case.ai_analysis.patient_view.red_flags
@@ -147,12 +149,14 @@
 
           <!-- Action Buttons -->
           <div class="text-center mb-4">
-            <a href="/patient/logout" class="btn btn-primary me-2">
-              <i class="fas fa-home me-1"></i> Back to Home
+            <a href="/patient/intake" class="btn btn-primary me-2">
+              <i class="fas fa-arrow-left me-1"></i> {{
+              t.patient_result.back_to_intake }}
             </a>
-            <button onclick="window.print()" class="btn btn-outline-secondary">
-              <i class="fas fa-print me-1"></i> Print Summary
-            </button>
+            <a href="/cases" class="btn btn-outline-secondary">
+              <i class="fas fa-folder-open me-1"></i> {{
+              t.patient_result.view_all_cases }}
+            </a>
           </div>
         </div>
       </div>

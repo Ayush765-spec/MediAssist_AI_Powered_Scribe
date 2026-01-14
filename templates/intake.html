@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MediAssist | Patient Intake Form</title>
+    <title>{{ t.common.app_name }} | {{ t.intake.title }}</title>
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -34,14 +34,18 @@
       <div class="container">
         <a class="navbar-brand" href="/">
           <i class="fas fa-heartbeat"></i>
-          <span>MediAssist <small class="text-muted">Check-In</small></span>
+          <span
+            >{{ t.common.app_name }}
+            <small class="text-muted">{{ t.intake.check_in }}</small></span
+          >
         </a>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 align-items-center">
+          {% include '_language_toggle.html' %}
           <a href="/cases" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-folder-open me-1"></i> All Records
+            <i class="fas fa-folder-open me-1"></i> {{ t.common.all_records }}
           </a>
           <a href="/patient/logout" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-arrow-left me-1"></i> Exit
+            <i class="fas fa-arrow-left me-1"></i> {{ t.common.exit }}
           </a>
         </div>
       </div>
@@ -53,34 +57,16 @@
         <div class="col-lg-8 col-md-10">
           <!-- HERO -->
           <div class="hero-section">
-            <h2 id="heroTitle">
+            <h2>
               <i class="fas fa-clipboard-user me-2"></i>
-              Begin Your Clinical Check-In
+              {{ t.intake.title }}
             </h2>
-            <p id="heroDesc">
-              This pre-visit intake will help your doctor prepare for your
-              appointment. Please answer honestly and thoroughly.
-            </p>
+            <p>{{ t.intake.subtitle }}</p>
           </div>
 
           {% if error %}
           <div class="alert alert-danger mb-4">{{ error }}</div>
           {% endif %}
-
-          <!-- LANGUAGE -->
-          <div class="d-flex justify-content-end mb-4">
-            <div style="max-width: 180px">
-              <label class="form-label small mb-2">Interface Language:</label>
-              <select
-                class="form-select form-select-sm"
-                id="languageSelect"
-                onchange="switchLanguage(this.value)"
-              >
-                <option value="English" selected>🇬🇧 English</option>
-                <option value="Hindi">🇮🇳 हिन्दी (Hindi)</option>
-              </select>
-            </div>
-          </div>
 
           <!-- FORM -->
           <form
@@ -93,29 +79,24 @@
               type="hidden"
               name="language"
               id="hiddenLanguage"
-              value="English"
+              value="{{ 'Hindi' if lang == 'hi' else 'English' }}"
             />
 
             <div class="row g-3">
               <!-- DOCTOR -->
               <div class="col-12">
-                <div class="form-row-label" id="sectionDoctor">
-                  👨‍⚕️ Select Your Doctor
+                <div class="form-row-label">
+                  👨‍⚕️ {{ t.intake.section_doctor }}
                 </div>
               </div>
 
               <div class="col-12">
-                <label class="form-label" id="lbl_doctor"
-                  >Which doctor are you visiting?
-                  <span class="req">*</span></label
+                <label class="form-label"
+                  >{{ t.intake.doctor_label }}
+                  <span class="req">{{ t.common.required }}</span></label
                 >
-                <select
-                  id="selectDoctor"
-                  name="doctor_id"
-                  class="form-select"
-                  required
-                >
-                  <option value="">-- Select a Doctor --</option>
+                <select name="doctor_id" class="form-select" required>
+                  <option value="">{{ t.intake.select_doctor }}</option>
                   {% for doctor in doctors %}
                   <option value="{{ doctor.id }}">
                     {{ doctor.name }} - {{ doctor.specialty }}
@@ -126,30 +107,29 @@
 
               <!-- DEMOGRAPHICS -->
               <div class="col-12">
-                <div class="form-row-label" id="sectionDemographics">
-                  👤 Personal Information
+                <div class="form-row-label">
+                  👤 {{ t.intake.section_demographics }}
                 </div>
               </div>
 
               <div class="col-sm-6">
-                <label class="form-label" id="lbl_name">Full Name</label>
+                <label class="form-label">{{ t.intake.full_name }}</label>
                 <input
                   type="text"
-                  id="inputName"
                   name="name"
                   class="form-control"
-                  placeholder="Enter your full name"
+                  placeholder="{{ t.intake.name_placeholder }}"
                   required
                 />
               </div>
 
               <div class="col-sm-3">
-                <label class="form-label" id="lbl_age"
-                  >Age <span class="req">*</span></label
+                <label class="form-label"
+                  >{{ t.intake.age }}
+                  <span class="req">{{ t.common.required }}</span></label
                 >
                 <input
                   type="number"
-                  id="inputAge"
                   name="age"
                   class="form-control"
                   min="0"
@@ -159,149 +139,170 @@
               </div>
 
               <div class="col-sm-3">
-                <label class="form-label" id="lbl_gender">Gender</label>
-                <select id="selectGender" name="gender" class="form-select">
-                  <option>Female</option>
-                  <option>Male</option>
-                  <option>Other</option>
+                <label class="form-label">{{ t.intake.gender }}</label>
+                <select name="gender" class="form-select">
+                  <option>{{ t.intake.female }}</option>
+                  <option>{{ t.intake.male }}</option>
+                  <option>{{ t.intake.other }}</option>
                 </select>
               </div>
 
               <!-- VITALS -->
               <div class="col-12 mt-2">
-                <div class="form-row-label" id="sectionVitals">
-                  📊 Vital Signs
+                <div class="form-row-label">
+                  📊 {{ t.intake.section_vitals }}
                 </div>
               </div>
 
               <div class="col-sm-3">
-                <label class="form-label" id="lbl_temp">Temperature (°C)</label>
+                <label class="form-label">{{ t.intake.temperature }}</label>
                 <input
                   type="number"
-                  id="inputTemp"
                   name="temperature"
                   class="form-control"
                   min="30"
                   max="45"
                   step="0.1"
-                  placeholder="37.0"
+                  placeholder="{{ t.intake.temp_placeholder }}"
                 />
               </div>
 
               <div class="col-sm-3">
-                <label class="form-label" id="lbl_bp"
-                  >Blood Pressure (optional)</label
-                >
+                <label class="form-label">{{ t.intake.blood_pressure }}</label>
                 <input
                   type="text"
-                  id="inputBP"
                   name="blood_pressure"
                   class="form-control"
-                  placeholder="e.g. 120/80"
+                  placeholder="{{ t.intake.bp_placeholder }}"
                 />
               </div>
 
               <div class="col-sm-3">
-                <label class="form-label" id="lbl_weight">Weight (kg)</label>
+                <label class="form-label">{{ t.intake.weight }}</label>
                 <input
                   type="number"
-                  id="inputWeight"
                   name="weight"
                   class="form-control"
                   min="1"
                   max="500"
                   step="0.1"
-                  placeholder="e.g. 70"
+                  placeholder="{{ t.intake.weight_placeholder }}"
                 />
               </div>
 
               <div class="col-sm-3">
-                <label class="form-label" id="lbl_height">Height (cm)</label>
+                <label class="form-label">{{ t.intake.height }}</label>
                 <input
                   type="number"
-                  id="inputHeight"
                   name="height"
                   class="form-control"
                   min="30"
                   max="250"
                   step="0.1"
-                  placeholder="e.g. 170"
-                />
-              </div>
-
-              <!-- MEDICAL -->
-              <div class="col-12 mt-2">
-                <div class="form-row-label" id="sectionMedical">
-                  ⚕️ Medical Information
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <label class="form-label" id="lbl_allergies"
-                  >Allergies <span class="req">*</span></label
-                >
-                <input
-                  type="text"
-                  id="inputAllergies"
-                  name="allergies"
-                  class="form-control"
-                  required
-                />
-              </div>
-
-              <div class="col-md-6">
-                <label class="form-label" id="lbl_meds"
-                  >Current Medications <span class="req">*</span></label
-                >
-                <input
-                  type="text"
-                  id="inputMeds"
-                  name="current_medications"
-                  class="form-control"
-                  required
+                  placeholder="{{ t.intake.height_placeholder }}"
                 />
               </div>
 
               <!-- SYMPTOMS -->
               <div class="col-12 mt-2">
-                <div class="form-row-label" id="sectionComplaint">
-                  🏥 Chief Complaint
+                <div class="form-row-label">
+                  🏥 {{ t.intake.section_symptoms }}
                 </div>
               </div>
 
               <div class="col-12">
-                <label class="form-label" id="lbl_symptoms"
-                  >Describe Your Symptoms <span class="req">*</span></label
+                <label class="form-label"
+                  >{{ t.intake.symptoms }}
+                  <span class="req">{{ t.common.required }}</span></label
                 >
                 <textarea
-                  id="textSymptoms"
                   name="symptoms"
                   class="form-control"
                   rows="5"
+                  placeholder="{{ t.intake.symptoms_placeholder }}"
                   required
                 ></textarea>
               </div>
 
-              <div class="col-12">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="1"
-                    name="confirm"
-                    required
-                  />
-                  <label class="form-check-label small-muted"
-                    >I confirm this data is accurate.</label
-                  >
+              <div class="col-sm-6">
+                <label class="form-label">{{ t.intake.duration }}</label>
+                <input
+                  type="text"
+                  name="duration"
+                  class="form-control"
+                  placeholder="{{ t.intake.duration_placeholder }}"
+                />
+              </div>
+
+              <div class="col-sm-6">
+                <label class="form-label">{{ t.intake.severity }}</label>
+                <select name="severity" class="form-select">
+                  <option>{{ t.intake.severity_mild }}</option>
+                  <option>{{ t.intake.severity_moderate }}</option>
+                  <option>{{ t.intake.severity_severe }}</option>
+                </select>
+              </div>
+
+              <!-- HISTORY -->
+              <div class="col-12 mt-2">
+                <div class="form-row-label">
+                  ⚕️ {{ t.intake.section_history }}
                 </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label"
+                  >{{ t.intake.allergies }}
+                  <span class="req">{{ t.common.required }}</span></label
+                >
+                <input
+                  type="text"
+                  name="allergies"
+                  class="form-control"
+                  placeholder="{{ t.intake.allergies_placeholder }}"
+                  required
+                />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label"
+                  >{{ t.intake.current_medications }}
+                  <span class="req">{{ t.common.required }}</span></label
+                >
+                <input
+                  type="text"
+                  name="current_medications"
+                  class="form-control"
+                  placeholder="{{ t.intake.medications_placeholder }}"
+                  required
+                />
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">{{ t.intake.medical_history }}</label>
+                <textarea
+                  name="medical_history"
+                  class="form-control"
+                  rows="3"
+                  placeholder="{{ t.intake.history_placeholder }}"
+                ></textarea>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">{{ t.intake.other_notes }}</label>
+                <textarea
+                  name="other_notes"
+                  class="form-control"
+                  rows="2"
+                  placeholder="{{ t.intake.notes_placeholder }}"
+                ></textarea>
               </div>
 
               <!-- SUBMIT -->
               <div class="col-12 text-center mt-4">
                 <button type="submit" class="btn-medical w-100">
                   <i class="fas fa-wand-magic-sparkles me-2"></i>
-                  <span id="btnText">Generate Clinical Summary</span>
+                  <span>{{ t.intake.submit_btn }}</span>
                 </button>
               </div>
             </div>
@@ -313,102 +314,6 @@
         </div>
       </div>
     </main>
-
-    <!-- TRANSLATION SCRIPT -->
-    <script>
-      const TRANSLATIONS = {
-        Hindi: {
-          heroTitle:
-            '<i class="fas fa-clipboard-user me-2"></i>अपनी क्लिनिकल चेक-इन शुरू करें',
-          heroDesc: "यह इनटेक डॉक्टर को आपकी मुलाकात के लिए तैयार करता है।",
-          sectionDoctor: "👨‍⚕️ अपने डॉक्टर का चयन करें",
-          sectionDemographics: "👤 व्यक्तिगत जानकारी",
-          sectionVitals: "📊 महत्वपूर्ण संकेत",
-          sectionMedical: "⚕️ चिकित्सीय जानकारी",
-          sectionComplaint: "🏥 मुख्य शिकायत",
-
-          lbl_name: "पूरा नाम",
-          lbl_age: 'उम्र <span class="req">*</span>',
-          lbl_gender: "लिंग",
-          lbl_temp: "तापमान (°C)",
-          lbl_bp: "रक्तचाप",
-          lbl_allergies: 'एलर्जी <span class="req">*</span>',
-          lbl_meds: 'वर्तमान दवाएं <span class="req">*</span>',
-          lbl_symptoms: 'लक्षण बताएं <span class="req">*</span>',
-          lbl_weight: "वजन (किलोग्राम)",
-          lbl_height: "कद (सेंटीमीटर)",
-
-          btnText: "सारांश बनाएं",
-        },
-
-        English: {
-          heroTitle:
-            '<i class="fas fa-clipboard-user me-2"></i>Begin Your Clinical Check-In',
-          heroDesc: "This intake helps your doctor prepare for your visit.",
-          sectionDoctor: "👨‍⚕️ Select Your Doctor",
-          sectionDemographics: "👤 Personal Information",
-          sectionVitals: "📊 Vital Signs",
-          sectionMedical: "⚕️ Medical Information",
-          sectionComplaint: "🏥 Chief Complaint",
-
-          lbl_name: "Full Name",
-          lbl_age: 'Age <span class="req">*</span>',
-          lbl_gender: "Gender",
-          lbl_temp: "Temperature (°C)",
-          lbl_bp: "Blood Pressure (optional)",
-          lbl_allergies: 'Allergies <span class="req">*</span>',
-          lbl_meds: 'Current Medications <span class="req">*</span>',
-          lbl_symptoms: 'Describe Your Symptoms <span class="req">*</span>',
-          lbl_weight: "Weight (kg)",
-          lbl_height: "Height (cm)",
-
-          btnText: "Generate Clinical Summary",
-        },
-      };
-
-      function switchLanguage(lang) {
-        document.getElementById("hiddenLanguage").value = lang;
-        const data = TRANSLATIONS[lang];
-
-        const ids = [
-          "heroTitle",
-          "heroDesc",
-          "sectionDoctor",
-          "sectionDemographics",
-          "sectionVitals",
-          "sectionMedical",
-          "sectionComplaint",
-          "lbl_name",
-          "lbl_age",
-          "lbl_gender",
-          "lbl_temp",
-          "lbl_bp",
-          "lbl_allergies",
-          "lbl_meds",
-          "lbl_symptoms",
-          "lbl_weight",
-          "lbl_height",
-          "btnText",
-        ];
-
-        ids.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el && data[id]) el.innerHTML = data[id];
-        });
-
-        if (lang === "Hindi") {
-          document.getElementById("inputName").placeholder =
-            "अपना पूरा नाम दर्ज करें";
-          document.getElementById("textSymptoms").placeholder =
-            "लक्षण विस्तार से लिखें...";
-        } else {
-          document.getElementById("inputName").placeholder =
-            "Enter your full name";
-          document.getElementById("textSymptoms").placeholder =
-            "Please describe your symptoms...";
-        }
-      }
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>

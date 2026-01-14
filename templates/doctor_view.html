@@ -1,317 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SOAP Note | {{ case.raw_data.id }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ t.doctor_view.title }} | {{ case.raw_data.id }}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
     <style>
-        body { background: #f8fafc; padding-bottom: 50px; }
-        
-        .soap-section { 
-            margin-bottom: 2.5rem;
-        }
-        
-        .soap-label { 
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            color: #0052cc; 
-            margin-bottom: 1.25rem;
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid #0052cc;
-            padding-bottom: 0.75rem;
-        }
-        
-        .soap-list {
-            list-style: none;
-            padding-left: 0;
-            margin-bottom: 0;
-        }
-        
-        .soap-list li {
-            background: #f3f4f6;
-            border-left: 4px solid #0052cc;
-            padding: 1.25rem;
-            margin-bottom: 1rem;
-            border-radius: 0 6px 6px 0;
-            line-height: 1.8;
-            color: #374151;
-            counter-increment: step-counter;
-        }
-        
-        .soap-list li::before {
-            content: counter(step-counter);
-            display: inline-block;
-            background: #0052cc;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 28px;
-            font-weight: 700;
-            margin-right: 0.75rem;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-        
-        .soap-list {
-            counter-reset: step-counter;
-        }
-        
-        .paper-card { 
-            background: white; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-            border-bottom: 2px solid #d1d5db;
-        }
-        
-        .diagnosis-highlight {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            border-left: 5px solid #0284c7;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            font-size: 1.05rem;
-            line-height: 1.8;
-        }
-        
-        .vitals-box {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .vitals-box h6 {
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .vitals-box ul {
-            list-style: none;
-            padding-left: 0;
-            margin-bottom: 0;
-        }
-        
-        .vitals-box li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 0.95rem;
-        }
-        
-        .vitals-box li:last-child {
-            border-bottom: none;
-        }
-        
-        strong { color: #1f2937; font-weight: 700; }
-        
-        .alert-danger {
-            background: #fee2e2;
-            border: 1px solid #fecaca;
-            border-left: 5px solid #dc2626;
-        }
-        
-        .alert-danger h5 {
-            color: #991b1b;
-        }
+      body {
+        background: #f8fafc;
+        padding-bottom: 50px;
+      }
+
+      .soap-section {
+        margin-bottom: 2.5rem;
+      }
+
+      .soap-label {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #0052cc;
+        margin-bottom: 1.25rem;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #0052cc;
+        padding-bottom: 0.75rem;
+      }
+
+      .soap-list {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 0;
+      }
+
+      .soap-list li {
+        background: #f3f4f6;
+        border-left: 4px solid #0052cc;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        border-radius: 0 6px 6px 0;
+        line-height: 1.8;
+        color: #374151;
+        counter-increment: step-counter;
+      }
+
+      .soap-list li::before {
+        content: counter(step-counter);
+        display: inline-block;
+        background: #0052cc;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-weight: 700;
+        margin-right: 0.75rem;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+      }
+
+      .soap-list {
+        counter-reset: step-counter;
+      }
+
+      .paper-card {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+      }
+
+      .card-header {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        border-bottom: 2px solid #d1d5db;
+      }
+
+      .diagnosis-highlight {
+        background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+        border-left: 5px solid #0284c7;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+        font-size: 1.05rem;
+        line-height: 1.8;
+      }
+
+      .vitals-box {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .vitals-box h6 {
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .vitals-box ul {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 0;
+      }
+
+      .vitals-box li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 0.95rem;
+      }
+
+      .vitals-box li:last-child {
+        border-bottom: none;
+      }
+
+      strong {
+        color: #1f2937;
+        font-weight: 700;
+      }
+
+      .alert-danger {
+        background: #fee2e2;
+        border: 1px solid #fecaca;
+        border-left: 5px solid #dc2626;
+      }
+
+      .alert-danger h5 {
+        color: #991b1b;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- NAVBAR -->
     <nav class="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="/doctor/dashboard">
-                <i class="fas fa-stethoscope"></i>
-                <span>MediAssist <small class="text-muted">Clinical Portal</small></span>
-            </a>
-            <a href="/doctor/logout" class="btn btn-outline-danger btn-sm">
-                <i class="fas fa-sign-out-alt me-1"></i> Logout
-            </a>
+      <div class="container">
+        <a class="navbar-brand" href="/doctor/dashboard">
+          <i class="fas fa-stethoscope"></i>
+          <span
+            >{{ t.common.app_name }}
+            <small class="text-muted"
+              >{{ t.intake.provider_portal }}</small
+            ></span
+          >
+        </a>
+        <div class="d-flex gap-2 align-items-center">
+          {% include '_language_toggle.html' %}
+          <a href="/doctor/logout" class="btn btn-outline-danger btn-sm">
+            <i class="fas fa-sign-out-alt me-1"></i> {{ t.common.logout }}
+          </a>
         </div>
+      </div>
     </nav>
 
     <div class="container my-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <a href="/doctor/dashboard" class="text-decoration-none text-muted mb-2 d-inline-block">
-                    <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
-                </a>
-                <h3 class="mt-2">
-                    <span class="text-muted small">Case ID:</span> 
-                    <code class="text-primary fw-bold">{{ case.raw_data.id }}</code>
-                </h3>
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <a
+            href="/doctor/dashboard"
+            class="text-decoration-none text-muted mb-2 d-inline-block"
+          >
+            <i class="fas fa-arrow-left me-1"></i> {{
+            t.doctor_view.back_to_dashboard }}
+          </a>
+          <h3 class="mt-2">
+            <span class="text-muted small">{{ t.doctor_view.case_id }}:</span>
+            <code class="text-primary fw-bold">{{ case.raw_data.id }}</code>
+          </h3>
+        </div>
+        <button
+          onclick="window.print()"
+          class="btn btn-primary"
+          title="Print to EMR"
+        >
+          <i class="fas fa-print me-2"></i>Print to EMR
+        </button>
+      </div>
+
+      <div class="card paper-card">
+        <!-- HEADER WITH PATIENT INFO -->
+        <div class="card-header p-4">
+          <div class="row align-items-center">
+            <div class="col-md-3">
+              <small class="text-muted text-uppercase">Patient Name</small
+              ><br />
+              <strong class="fs-5">{{ case.raw_data.name }}</strong>
             </div>
-            <button onclick="window.print()" class="btn btn-primary" title="Print to EMR">
-                <i class="fas fa-print me-2"></i>Print to EMR
-            </button>
+            <div class="col-md-3">
+              <small class="text-muted text-uppercase">Demographics</small
+              ><br />
+              <strong
+                >{{ case.raw_data.age }} years old / {{ case.raw_data.gender
+                }}</strong
+              >
+            </div>
+            <div class="col-md-3">
+              <small class="text-muted text-uppercase">Timestamp</small><br />
+              <strong>{{ case.raw_data.timestamp }}</strong>
+            </div>
+            <div class="col-md-3">
+              <small class="text-muted text-uppercase">⚠️ Allergies</small
+              ><br />
+              <span class="badge bg-danger fs-6"
+                >{{ case.raw_data.allergies }}</span
+              >
+            </div>
+          </div>
         </div>
 
-        <div class="card paper-card">
-            <!-- HEADER WITH PATIENT INFO -->
-            <div class="card-header p-4">
-                <div class="row align-items-center">
-                    <div class="col-md-3">
-                        <small class="text-muted text-uppercase">Patient Name</small><br>
-                        <strong class="fs-5">{{ case.raw_data.name }}</strong>
-                    </div>
-                    <div class="col-md-3">
-                        <small class="text-muted text-uppercase">Demographics</small><br>
-                        <strong>{{ case.raw_data.age }} years old / {{ case.raw_data.gender }}</strong>
-                    </div>
-                    <div class="col-md-3">
-                        <small class="text-muted text-uppercase">Timestamp</small><br>
-                        <strong>{{ case.raw_data.timestamp }}</strong>
-                    </div>
-                    <div class="col-md-3">
-                        <small class="text-muted text-uppercase">⚠️ Allergies</small><br>
-                        <span class="badge bg-danger fs-6">{{ case.raw_data.allergies }}</span>
-                    </div>
-                </div>
+        <!-- BODY -->
+        <div class="card-body p-5">
+          <!-- SAFETY ALERT (if applicable) -->
+          {% if not case.ai_analysis.safety.is_safe %}
+          <div class="alert alert-danger mb-4" role="alert">
+            <h5 class="alert-heading">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              <strong>⚠️ Pharmacovigilance Alert</strong>
+            </h5>
+            <ul class="mb-0 ps-3">
+              {% for warn in case.ai_analysis.safety.warnings %}
+              <li class="mb-2"><strong>{{ warn | safe }}</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <!-- PRIMARY DIAGNOSIS HIGHLIGHT -->
+          <div class="diagnosis-highlight">
+            <strong
+              ><i class="fas fa-check-circle me-2 text-info"></i>Most Probable
+              Diagnosis:</strong
+            ><br />
+            <span style="font-size: 1.2rem; margin-top: 0.5rem; display: block">
+              {{ case.ai_analysis.patient_view.primary_diagnosis | safe }}
+            </span>
+          </div>
+
+          <!-- VITALS & MEDICATIONS SUMMARY -->
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <div class="vitals-box">
+                <h6>
+                  <i class="fas fa-heartbeat me-2 text-danger"></i>Vital Signs
+                </h6>
+                <ul>
+                  <li>
+                    <strong>Temperature:</strong>
+                    <span class="float-end">{{ case.raw_data.temp }}°C</span>
+                  </li>
+                  <li>
+                    <strong>Blood Pressure:</strong>
+                    <span class="float-end"
+                      >{{ case.raw_data.bp if case.raw_data.bp else 'Not
+                      recorded' }}</span
+                    >
+                  </li>
+                  <li>
+                    <strong>Weight:</strong>
+                    <span class="float-end"
+                      >{{ case.raw_data.weight if case.raw_data.weight else
+                      'N/A' }} kg</span
+                    >
+                  </li>
+                  <li>
+                    <strong>Height:</strong>
+                    <span class="float-end"
+                      >{{ case.raw_data.height if case.raw_data.height else
+                      'N/A' }} cm</span
+                    >
+                  </li>
+                </ul>
+              </div>
             </div>
-
-            <!-- BODY -->
-            <div class="card-body p-5">
-                
-                <!-- SAFETY ALERT (if applicable) -->
-                {% if not case.ai_analysis.safety.is_safe %}
-                <div class="alert alert-danger mb-4" role="alert">
-                    <h5 class="alert-heading">
-                        <i class="fas fa-exclamation-triangle me-2"></i> 
-                        <strong>⚠️ Pharmacovigilance Alert</strong>
-                    </h5>
-                    <ul class="mb-0 ps-3">
-                        {% for warn in case.ai_analysis.safety.warnings %}
-                        <li class="mb-2"><strong>{{ warn | safe }}</strong></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-
-                <!-- PRIMARY DIAGNOSIS HIGHLIGHT -->
-                <div class="diagnosis-highlight">
-                    <strong><i class="fas fa-check-circle me-2 text-info"></i>Most Probable Diagnosis:</strong><br>
-                    <span style="font-size: 1.2rem; margin-top: 0.5rem; display: block;">
-                        {{ case.ai_analysis.patient_view.primary_diagnosis | safe }}
-                    </span>
-                </div>
-
-                <!-- VITALS & MEDICATIONS SUMMARY -->
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <div class="vitals-box">
-                            <h6><i class="fas fa-heartbeat me-2 text-danger"></i>Vital Signs</h6>
-                            <ul>
-                                <li><strong>Temperature:</strong> <span class="float-end">{{ case.raw_data.temp }}°C</span></li>
-                                <li><strong>Blood Pressure:</strong> <span class="float-end">{{ case.raw_data.bp if case.raw_data.bp else 'Not recorded' }}</span></li>
-                                <li><strong>Weight:</strong> <span class="float-end">{{ case.raw_data.weight if case.raw_data.weight else 'N/A' }} kg</span></li>
-                                <li><strong>Height:</strong> <span class="float-end">{{ case.raw_data.height if case.raw_data.height else 'N/A' }} cm</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="vitals-box">
-                            <h6><i class="fas fa-prescription-bottle me-2 text-primary"></i>Current Medications</h6>
-                            <p class="mb-0">{{ case.raw_data.current_meds }}</p>
-                            <hr class="my-2">
-                            <h6 class="mt-3"><i class="fas fa-history me-2 text-warning"></i>Medical History</h6>
-                            <p class="mb-0">{{ case.raw_data.history }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="my-5">
-
-                <!-- SOAP NOTE SECTIONS AS LISTS -->
-                
-                <!-- S - SUBJECTIVE -->
-                <div class="soap-section">
-                    <span class="soap-label">
-                        <i class="fas fa-comment-medical me-2"></i>S - Subjective (HPI)
-                    </span>
-                    <ul class="soap-list">
-                        {% for item in case.ai_analysis.doctor_view.subjective_list %}
-                        <li>{{ item | safe }}</li>
-                        {% endfor %}
-                    </ul>
-                    <div class="vitals-box mt-3">
-                        <small><strong>Chief Complaint Duration:</strong> {{ case.raw_data.duration }}</small><br>
-                        <small><strong>Severity:</strong> {{ case.raw_data.severity }}</small><br>
-                        <small><strong>Additional Notes:</strong> {{ case.raw_data.notes if case.raw_data.notes else 'None' }}</small>
-                    </div>
-                </div>
-
-                <!-- O - OBJECTIVE -->
-                <div class="soap-section">
-                    <span class="soap-label">
-                        <i class="fas fa-stethoscope me-2"></i>O - Objective (Physical Exam & Labs)
-                    </span>
-                    <ul class="soap-list">
-                        {% for item in case.ai_analysis.doctor_view.objective_list %}
-                        <li>{{ item | safe }}</li>
-                        {% endfor %}
-                    </ul>
-                    <div class="vitals-box mt-3">
-                        <small><strong>Reported Symptoms:</strong> {{ case.raw_data.symptoms }}</small>
-                    </div>
-                </div>
-
-                <!-- A - ASSESSMENT -->
-                <div class="soap-section">
-                    <span class="soap-label">
-                        <i class="fas fa-brain me-2"></i>A - Assessment (Diagnosis & Differential)
-                    </span>
-                    <ul class="soap-list">
-                        {% for item in case.ai_analysis.doctor_view.assessment_list %}
-                        <li>{{ item | safe }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <!-- P - PLAN -->
-                <div class="soap-section">
-                    <span class="soap-label">
-                        <i class="fas fa-clipboard-list me-2"></i>P - Plan (Treatment & Follow-up)
-                    </span>
-                    <ul class="soap-list">
-                        {% for item in case.ai_analysis.doctor_view.plan_list %}
-                        <li>{{ item | safe }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                
+            <div class="col-md-6">
+              <div class="vitals-box">
+                <h6>
+                  <i class="fas fa-prescription-bottle me-2 text-primary"></i
+                  >Current Medications
+                </h6>
+                <p class="mb-0">{{ case.raw_data.current_meds }}</p>
+                <hr class="my-2" />
+                <h6 class="mt-3">
+                  <i class="fas fa-history me-2 text-warning"></i>Medical
+                  History
+                </h6>
+                <p class="mb-0">{{ case.raw_data.history }}</p>
+              </div>
             </div>
+          </div>
 
-            <!-- FOOTER -->
-            <div class="card-footer text-muted small p-4" style="background: #f9fafb; border-top: 2px solid #e5e7eb;">
-                <div class="row">
-                    <div class="col-md-6">
-                        <strong>AI-Generated Summary:</strong> MediAssist Clinical Scribe<br>
-                        <em style="color: #dc2626;">⚠️ Requires clinician review before clinical use</em>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <strong>Reviewed by:</strong> _________________________<br>
-                        <strong>Signature/Date:</strong> _________________________
-                    </div>
-                </div>
+          <hr class="my-5" />
+
+          <!-- SOAP NOTE SECTIONS AS LISTS -->
+
+          <!-- S - SUBJECTIVE -->
+          <div class="soap-section">
+            <span class="soap-label">
+              <i class="fas fa-comment-medical me-2"></i>S - Subjective (HPI)
+            </span>
+            <ul class="soap-list">
+              {% for item in case.ai_analysis.doctor_view.subjective_list %}
+              <li>{{ item | safe }}</li>
+              {% endfor %}
+            </ul>
+            <div class="vitals-box mt-3">
+              <small
+                ><strong>Chief Complaint Duration:</strong> {{
+                case.raw_data.duration }}</small
+              ><br />
+              <small
+                ><strong>Severity:</strong> {{ case.raw_data.severity }}</small
+              ><br />
+              <small
+                ><strong>Additional Notes:</strong> {{ case.raw_data.notes if
+                case.raw_data.notes else 'None' }}</small
+              >
             </div>
+          </div>
+
+          <!-- O - OBJECTIVE -->
+          <div class="soap-section">
+            <span class="soap-label">
+              <i class="fas fa-stethoscope me-2"></i>O - Objective (Physical
+              Exam & Labs)
+            </span>
+            <ul class="soap-list">
+              {% for item in case.ai_analysis.doctor_view.objective_list %}
+              <li>{{ item | safe }}</li>
+              {% endfor %}
+            </ul>
+            <div class="vitals-box mt-3">
+              <small
+                ><strong>Reported Symptoms:</strong> {{ case.raw_data.symptoms
+                }}</small
+              >
+            </div>
+          </div>
+
+          <!-- A - ASSESSMENT -->
+          <div class="soap-section">
+            <span class="soap-label">
+              <i class="fas fa-brain me-2"></i>A - Assessment (Diagnosis &
+              Differential)
+            </span>
+            <ul class="soap-list">
+              {% for item in case.ai_analysis.doctor_view.assessment_list %}
+              <li>{{ item | safe }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- P - PLAN -->
+          <div class="soap-section">
+            <span class="soap-label">
+              <i class="fas fa-clipboard-list me-2"></i>P - Plan (Treatment &
+              Follow-up)
+            </span>
+            <ul class="soap-list">
+              {% for item in case.ai_analysis.doctor_view.plan_list %}
+              <li>{{ item | safe }}</li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
+
+        <!-- FOOTER -->
+        <div
+          class="card-footer text-muted small p-4"
+          style="background: #f9fafb; border-top: 2px solid #e5e7eb"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <strong>AI-Generated Summary:</strong> MediAssist Clinical
+              Scribe<br />
+              <em style="color: #dc2626"
+                >⚠️ Requires clinician review before clinical use</em
+              >
+            </div>
+            <div class="col-md-6 text-md-end">
+              <strong>Reviewed by:</strong> _________________________<br />
+              <strong>Signature/Date:</strong> _________________________
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>

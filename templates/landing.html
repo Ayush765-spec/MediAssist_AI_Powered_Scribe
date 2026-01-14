@@ -1,138 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MediAssist | Welcome</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ t.common.app_name }} | {{ t.landing.title }}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <style>
-        body {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f0f4f8 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-container {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        .hero-container h1 {
-            font-size: 3rem;
-            color: #0052cc;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .hero-container p {
-            font-size: 1.1rem;
-            color: #4b5563;
-            margin-bottom: 1rem;
-        }
-        .role-card {
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            height: 100%;
-        }
-        .role-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
-        }
-        .role-card.patient-card {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            border: 2px solid #90caf9;
-        }
-        .role-card.doctor-card {
-            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
-            border: 2px solid #ce93d8;
-        }
-        .icon-lg {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-        }
-        .role-card.patient-card .icon-lg {
-            color: #0052cc;
-        }
-        .role-card.doctor-card .icon-lg {
-            color: #7b1fa2;
-        }
-        .role-card h3 {
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 0.75rem;
-        }
-        .role-card p {
-            color: #4b5563;
-            font-size: 0.95rem;
-        }
-        .btn-role {
-            border-radius: 50px;
-            padding: 0.75rem 2rem;
-            font-weight: 600;
-            margin-top: 1.5rem;
-            transition: all 0.2s ease;
-        }
-        .btn-role:hover {
-            transform: scale(1.05);
-        }
-        footer {
-            margin-top: 4rem;
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
+      body {
+        background: linear-gradient(135deg, #e3f2fd 0%, #f0f4f8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: "Inter", sans-serif;
+      }
+      .hero-container {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      .hero-container h1 {
+        font-size: 3rem;
+        color: #0052cc;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .hero-container p {
+        font-size: 1.1rem;
+        color: #4b5563;
+        margin-bottom: 1rem;
+      }
+      .role-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        height: 100%;
+      }
+      .role-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      }
+      .role-card.patient-card {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        border: 2px solid #90caf9;
+      }
+      .role-card.doctor-card {
+        background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+        border: 2px solid #ce93d8;
+      }
+      .icon-lg {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+      }
+      .role-card.patient-card .icon-lg {
+        color: #0052cc;
+      }
+      .role-card.doctor-card .icon-lg {
+        color: #7b1fa2;
+      }
+      .role-card h3 {
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.75rem;
+      }
+      .role-card p {
+        color: #4b5563;
+        font-size: 0.95rem;
+      }
+      .btn-role {
+        border-radius: 50px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        transition: all 0.2s ease;
+      }
+      .btn-role:hover {
+        transform: scale(1.05);
+      }
+      footer {
+        margin-top: 4rem;
+        color: #6b7280;
+        font-size: 0.9rem;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="hero-container">
-            <h1><i class="fas fa-heartbeat me-2"></i>MediAssist</h1>
-            <p>AI-Powered Medical Scribe & Clinical Assistant</p>
-            <p class="text-muted small">Select your role to get started</p>
+      <div class="d-flex justify-content-end mb-3">
+        {% include '_language_toggle.html' %}
+      </div>
+      <div class="hero-container">
+        <h1><i class="fas fa-heartbeat me-2"></i>{{ t.common.app_name }}</h1>
+        <p>{{ t.landing.subtitle }}</p>
+        <p class="text-muted small">{{ t.landing.title }}</p>
+      </div>
+
+      <div class="row g-4 justify-content-center">
+        <!-- Patient Role -->
+        <div class="col-md-5">
+          <div class="card role-card patient-card p-5">
+            <div class="card-body text-center">
+              <div class="icon-lg"><i class="fas fa-user-injured"></i></div>
+              <h3>{{ t.landing.patient_portal }}</h3>
+              <p>{{ t.landing.patient_desc }}</p>
+              <a href="/patient/login" class="btn btn-primary btn-role">
+                <i class="fas fa-sign-in-alt me-2"></i>{{ t.patient_login.login
+                }}
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div class="row g-4 justify-content-center">
-            <!-- Patient Role -->
-            <div class="col-md-5">
-                <div class="card role-card patient-card p-5">
-                    <div class="card-body text-center">
-                        <div class="icon-lg"><i class="fas fa-user-injured"></i></div>
-                        <h3>I am a Patient</h3>
-                        <p>Start a pre-visit check-in and receive a personalized health summary in your preferred language.</p>
-                        <a href="/patient/login" class="btn btn-primary btn-role">
-                            <i class="fas fa-sign-in-alt me-2"></i>Patient Login
-                        </a>
-                    </div>
-                </div>
+        <!-- Doctor Role -->
+        <div class="col-md-5">
+          <div class="card role-card doctor-card p-5">
+            <div class="card-body text-center">
+              <div class="icon-lg"><i class="fas fa-user-md"></i></div>
+              <h3>{{ t.landing.doctor_portal }}</h3>
+              <p>{{ t.landing.doctor_desc }}</p>
+              <a href="/doctor/login" class="btn btn-outline-dark btn-role">
+                <i class="fas fa-lock me-2"></i>{{ t.doctor_login.login }}
+              </a>
             </div>
-
-            <!-- Doctor Role -->
-            <div class="col-md-5">
-                <div class="card role-card doctor-card p-5">
-                    <div class="card-body text-center">
-                        <div class="icon-lg"><i class="fas fa-user-md"></i></div>
-                        <h3>I am a Provider</h3>
-                        <p>Access your patient intake forms and view AI-generated SOAP notes to streamline your workflow.</p>
-                        <a href="/doctor/login" class="btn btn-outline-dark btn-role">
-                            <i class="fas fa-lock me-2"></i>Provider Login
-                        </a>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
 
-        <footer>
-            <div class="text-center mt-5">
-                <p><i class="fas fa-shield-alt me-1"></i> Secure • HIPAA-Compliant Architecture</p>
-                <p class="small text-muted">Demo Credentials: patient1/p123 | dr_patel/patel123</p>
-            </div>
-        </footer>
+      <footer>
+        <div class="text-center mt-5">
+          <p>
+            <i class="fas fa-shield-alt me-1"></i> Secure • HIPAA-Compliant
+            Architecture
+          </p>
+          <p class="small text-muted">
+            Demo Credentials: patient1/p123 | dr_patel/patel123
+          </p>
+        </div>
+      </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>

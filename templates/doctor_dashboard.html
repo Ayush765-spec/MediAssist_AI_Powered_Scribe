@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Clinical Dashboard | MediAssist</title>
+    <title>{{ t.doctor_dashboard.title }} | {{ t.common.app_name }}</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -70,15 +70,17 @@
     <nav class="navbar navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">
-          <i class="fas fa-hospital-user me-2"></i>MediAssist Provider Portal
+          <i class="fas fa-hospital-user me-2"></i>{{ t.common.app_name }} {{
+          t.doctor_dashboard.provider_portal }}
         </a>
         <div class="d-flex align-items-center gap-3">
+          {% include '_language_toggle.html' %}
           <a href="/cases" class="btn btn-outline-light btn-sm">
-            <i class="fas fa-folder-open me-1"></i>All Cases
+            <i class="fas fa-folder-open me-1"></i>{{ t.common.all_cases }}
           </a>
           <span class="text-light">{{ doctor.name }}</span>
           <a href="/doctor/logout" class="btn btn-outline-light btn-sm">
-            <i class="fas fa-sign-out-alt me-1"></i>Logout
+            <i class="fas fa-sign-out-alt me-1"></i>{{ t.common.logout }}
           </a>
         </div>
       </div>
@@ -99,7 +101,7 @@
           <div class="col-md-4 text-md-end">
             <div class="stats-badge">
               <i class="fas fa-briefcase-medical me-1"></i>
-              {{ cases|length }} Active Cases
+              {{ cases|length }} {{ t.doctor_dashboard.total_cases }}
             </div>
           </div>
         </div>
@@ -109,8 +111,10 @@
     <!-- MAIN CONTENT -->
     <div class="container-fluid my-5">
       <div class="mb-4">
-        <h4 class="fw-bold text-dark">Active Triage Queue</h4>
-        <p class="text-muted">Cases assigned to you</p>
+        <h4 class="fw-bold text-dark">
+          {{ t.doctor_dashboard.pending_review }}
+        </h4>
+        <p class="text-muted">{{ t.doctor_dashboard.no_cases if not cases }}</p>
       </div>
 
       {% if cases %}
@@ -119,12 +123,12 @@
           <table class="table table-hover mb-0 align-middle">
             <thead class="table-light">
               <tr>
-                <th>Case ID</th>
-                <th>Date/Time</th>
-                <th>Patient</th>
-                <th>Chief Complaint</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>{{ t.cases.case_id }}</th>
+                <th>{{ t.cases.date }}</th>
+                <th>{{ t.doctor_dashboard.patient }}</th>
+                <th>{{ t.doctor_view.symptoms }}</th>
+                <th>{{ t.cases.status }}</th>
+                <th>{{ t.cases.actions }}</th>
               </tr>
             </thead>
             <tbody>
@@ -162,7 +166,8 @@
                     href="/doctor/view/{{ case.raw_data.id }}"
                     class="btn btn-sm btn-primary"
                   >
-                    <i class="fas fa-file-medical me-1"></i>View SOAP
+                    <i class="fas fa-file-medical me-1"></i>{{
+                    t.doctor_dashboard.view_details }}
                   </a>
                 </td>
               </tr>
@@ -177,8 +182,7 @@
           class="fas fa-inbox text-muted"
           style="font-size: 3rem; margin-bottom: 1rem"
         ></i>
-        <h5 class="text-muted">No Active Cases</h5>
-        <p class="text-muted">Waiting for patients to submit intake forms...</p>
+        <h5 class="text-muted">{{ t.doctor_dashboard.no_cases }}</h5>
       </div>
       {% endif %}
     </div>

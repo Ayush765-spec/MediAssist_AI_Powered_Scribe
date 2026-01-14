@@ -1,102 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Patient Login | MediAssist</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ t.patient_login.title }} | {{ t.common.app_name }}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <style>
-        body {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f0f4f8 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-        }
-        .login-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-            border: 1px solid #e5e7eb;
-            padding: 3rem;
-            max-width: 420px;
-            width: 100%;
-        }
-        .login-header { text-align: center; margin-bottom: 2rem; }
-        .login-header h2 { color: #0052cc; font-weight: 700; margin-bottom: 0.5rem; }
-        .login-header p { color: #6b7280; font-size: 0.95rem; }
-        .form-label { font-weight: 600; color: #1f2937; margin-bottom: 0.5rem; }
-        .form-control { border: 1.5px solid #d1d5db; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.95rem; }
-        .form-control:focus { border-color: #0052cc; box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.1); }
-        .btn-login {
-            background: linear-gradient(135deg, #0052cc 0%, #003d99 100%);
-            color: white; border: none; border-radius: 50px; padding: 0.75rem;
-            font-weight: 600; margin-top: 1.5rem; transition: all 0.2s ease; width: 100%;
-        }
-        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0, 82, 204, 0.3); }
-        .back-link { text-align: center; margin-top: 1.5rem; }
-        .back-link a { color: #0052cc; text-decoration: none; font-weight: 500; }
-        .demo-creds {
-            background: #fef3c7;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
-            color: #92400e;
-        }
+      body {
+        background: linear-gradient(135deg, #e3f2fd 0%, #f0f4f8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: "Inter", sans-serif;
+      }
+      .login-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        border: 1px solid #e5e7eb;
+        padding: 3rem;
+        max-width: 420px;
+        width: 100%;
+      }
+      .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .login-header h2 {
+        color: #0052cc;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .login-header p {
+        color: #6b7280;
+        font-size: 0.95rem;
+      }
+      .form-label {
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+      }
+      .form-control {
+        border: 1.5px solid #d1d5db;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+      }
+      .form-control:focus {
+        border-color: #0052cc;
+        box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.1);
+      }
+      .btn-login {
+        background: linear-gradient(135deg, #0052cc 0%, #003d99 100%);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 0.75rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        transition: all 0.2s ease;
+        width: 100%;
+      }
+      .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 82, 204, 0.3);
+      }
+      .back-link {
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+      .back-link a {
+        color: #0052cc;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .demo-creds {
+        background: #fef3c7;
+        border: 1px solid #fcd34d;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1.5rem;
+        font-size: 0.85rem;
+        color: #92400e;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000">
+      {% include '_language_toggle.html' %}
+    </div>
     <div class="login-card">
-        <div class="login-header">
-            <h2><i class="fas fa-user-injured me-2"></i>Patient Login</h2>
-            <p>Access your health records and intake forms</p>
+      <div class="login-header">
+        <h2>
+          <i class="fas fa-user-injured me-2"></i>{{ t.patient_login.title }}
+        </h2>
+        <p>{{ t.landing.patient_desc }}</p>
+      </div>
+
+      {% if request.args.get('message') %}
+      <div class="alert alert-info" role="alert">
+        {{ request.args.get('message') }}
+      </div>
+      {% endif %} {% with messages =
+      get_flashed_messages(category_filter=['danger']) %} {% if messages %}
+      <div class="alert alert-danger" role="alert">{{ messages[0] }}</div>
+      {% endif %} {% endwith %}
+
+      <form method="POST" action="/patient/login">
+        <div class="mb-3">
+          <label for="username" class="form-label"
+            >{{ t.patient_login.username }}</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            placeholder="patient1"
+            required
+          />
         </div>
 
-        {% if request.args.get('message') %}
-        <div class="alert alert-info" role="alert">
-            {{ request.args.get('message') }}
-        </div>
-        {% endif %}
-
-        {% with messages = get_flashed_messages(category_filter=['danger']) %}
-            {% if messages %}
-                <div class="alert alert-danger" role="alert">
-                    {{ messages[0] }}
-                </div>
-            {% endif %}
-        {% endwith %}
-
-        <form method="POST" action="/patient/login">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="patient1" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
-            </div>
-
-            <button type="submit" class="btn btn-login">
-                <i class="fas fa-sign-in-alt me-2"></i>Login
-            </button>
-        </form>
-
-        <div class="demo-creds">
-            <strong><i class="fas fa-lightbulb me-1"></i>Demo Credentials:</strong><br>
-            Username: <code>patient1</code><br>
-            Password: <code>p123</code>
+        <div class="mb-3">
+          <label for="password" class="form-label"
+            >{{ t.patient_login.password }}</label
+          >
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="••••••••"
+            required
+          />
         </div>
 
-        <div class="back-link">
-            <a href="/"><i class="fas fa-arrow-left me-1"></i>Back to Home</a>
-        </div>
+        <button type="submit" class="btn btn-login">
+          <i class="fas fa-sign-in-alt me-2"></i>{{ t.patient_login.login }}
+        </button>
+      </form>
+
+      <div class="demo-creds">
+        <strong><i class="fas fa-lightbulb me-1"></i>Demo Credentials:</strong
+        ><br />
+        Username: <code>patient1</code><br />
+        Password: <code>p123</code>
+      </div>
+
+      <div class="back-link">
+        <a href="/"><i class="fas fa-arrow-left me-1"></i>Back to Home</a>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>
